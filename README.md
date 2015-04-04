@@ -119,3 +119,53 @@ The code above simply send the string message "GET / HTTP/1.1\r\n\r\n" to google
 We can receive data from the server we contacted before using `recv` function. Below are example on how to receive data after we sent one.
 
 
+    # Code 5.py
+    import socket
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    print("Socked created!")
+
+    host = 'www.google.com'
+    port = 80
+
+    remote_ip = socket.gethostbyname(host)
+
+    print("IP Address of " + host + " is " + remote_ip)
+
+    s.connect((remote_ip, port))
+
+    print("Socket connected to " + host + " on ip " + remote_ip)
+
+    message = b"GET / HTTP/1.1\r\n\r\n"
+    s.sendall(message)
+
+    reply = s.recv(4096)
+
+    print(reply)
+
+The code now will return the content of the page that we requested before.
+Last thing to do is to close the socket.
+
+### Close Socket
+
+Easy enough, we should use `close` function provided by `socket` package.
+
+    # Code 6
+    s.close()
+
+And that's it folks.
+
+## Conclusion
+
+In this article learned how to:
+
+1. Create a socket
+2. Connect to the server
+3. Send some data
+4. Receive a reply from the server
+
+What we did above represents a client side. And we use google.com
+as the server side. Web server provided by google is one example
+of server which use port 80. The web server duty is to receipt
+the request and return it with respective reply in form of HTML page.
